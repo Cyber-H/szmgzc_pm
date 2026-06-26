@@ -15,10 +15,11 @@
 ```
 .
 ├── README.md                              # 本文件
+├── 数媒智创平台_PRD_V1.0.docx            # PRD Word 版本
 ├── docs/
-│   ├── 数媒智创平台_PRD_V1.0.md         # PRD Markdown 版本
-│   └── 数媒智创平台_PRD_V1.0.docx       # PRD Word 版本
+│   └── 数媒智创平台_PRD_V1.0.md            # PRD Markdown 版本
 ├── roadmap/                               # 后续规划（待补充）
+│   └── Next.md
 └── .gitignore
 ```
 
