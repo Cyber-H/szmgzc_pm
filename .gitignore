@@ -16,3 +16,6 @@ Thumbs.db
 .env
 *.env
 .env.local
+
+# 忽略 WorkBuddy 工作目录（AI 助手本地缓存，不入库）
+.workbuddy/
