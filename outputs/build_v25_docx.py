@@ -50,6 +50,46 @@ def insert_paragraph_after(paragraph, text):
     p.add_run(text)
     return p
 
+import re
+def is_section_heading(p):
+    s = p.text.strip()
+    if re.match(r'^\d+(\.\d+){1,}\s', s):
+        return True
+    st = p.style
+    return st is not None and st.name.lower().startswith('heading')
+
+def rewrite_section_body(doc, heading_prefix, new_paragraphs):
+    """Overwrite the body paragraphs of a numbered section (between its heading
+    and the next heading) with `new_paragraphs`, preserving the heading itself.
+    Robust to count mismatch: reuse existing real paragraphs, delete extras,
+    insert if more are needed; stray blank paragraphs are removed."""
+    paras = doc.paragraphs
+    hi = next((i for i, p in enumerate(paras) if p.text.strip().startswith(heading_prefix)), None)
+    if hi is None:
+        print("!! heading not found:", heading_prefix)
+        return
+    ni = len(paras)
+    for j in range(hi + 1, len(paras)):
+        if is_section_heading(paras[j]):
+            ni = j
+            break
+    body = paras[hi + 1:ni]
+    real = [p for p in body if p.text.strip() != '']
+    empties = [p for p in body if p.text.strip() == '']
+    n, m = len(new_paragraphs), len(real)
+    for k in range(min(n, m)):
+        set_text(real[k], new_paragraphs[k])
+    if n > m:
+        anchor = real[m - 1] if m > 0 else paras[hi]
+        for k in range(m, n):
+            anchor = insert_paragraph_after(anchor, new_paragraphs[k])
+    elif n < m:
+        for k in range(n, m):
+            p = real[k]
+            p._p.getparent().remove(p._p)
+    for p in empties:
+        p._p.getparent().remove(p._p)
+
 # ---- 1. version header ----
 replace_in(doc, "文档版本：V2.4", "文档版本：V2.5")
 
@@ -115,6 +155,18 @@ if rev is not None:
             "阿爪"]
     for i, cell in enumerate(new_row.cells):
         set_text(cell, vals[i])
+
+# ---- 6. 4.4.2 页面结构：整节重写为与 md 一致（四个 Tab 整合页） ----
+# 旧 docx 继承 V2.4 的过期结构（"顶部脉搏+中部筛选+下部列表"+"双Tab切换"），
+# 当初替换字符串带多余 \n\n 未命中，此处按 md 重排整节。
+SEC442 = [
+    "热点助手 V2.4 升级为「四个 Tab 整合页」布局：",
+    "顶部 Tab 栏：热点搜索 / 热点预测 / 国内热榜 / 国际热榜（后两个即原热点榜单的国内/国际数据）。",
+    "检索区（热点搜索 / 热点预测 Tab 下）：关键词输入框 + 行业分类 + 地域 + 内容发布时间（起止）筛选 + 「搜索」「重置」按钮；V2.4 新增「刷新热点数据」按钮与「数据更新时间」标识，便于判断数据新鲜度。",
+    "深圳今日热点脉搏：地域化热点榜单，展示深圳本地正在发酵的话题及热度上升趋势（如「深圳多点布置景观装置迎APEC ↑66」）。",
+    "下部：热点事件卡片列表，每张卡片展示分类标签、地域、标题、摘要、热度、阅读量，并支持「所属中事件」关联跳转与「查看详情」。",
+]
+rewrite_section_body(doc, "4.4.2", SEC442)
 
 doc.save(DST)
 print("V2.5.docx generated ->", DST)
