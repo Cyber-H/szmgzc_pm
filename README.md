@@ -7,7 +7,7 @@
 - **产品名称**：数媒智创平台
 - **产品定位**：面向媒体行业与内容创作者的一站式AI智能内容生成平台
 - **主站地址**：https://x.sztv.com.cn
-- **PRD版本**：V2.4
+- **PRD版本**：V2.5
 - **编制日期**：2026-08-11
 
 ## 2. 文件结构
@@ -15,14 +15,16 @@
 ```
 .
 ├── README.md                              # 本文件
-├── 数媒智创平台_PRD_V2.4.docx            # PRD Word 版本（最新）
+├── 数媒智创平台_PRD_V2.5.docx            # PRD Word 版本（最新）
+├── 数媒智创平台_PRD_V2.4.docx            # PRD Word 历史版本
 ├── 数媒智创平台_PRD_V2.3.docx            # PRD Word 历史版本
 ├── 数媒智创平台_PRD_V2.2.docx            # PRD Word 历史版本（国际源推断，V2.3已订正）
 ├── 数媒智创平台_PRD_V2.1.docx            # PRD Word 历史版本
 ├── 数媒智创平台_PRD_V2.0.docx            # PRD Word 历史版本
 ├── 数媒智创平台_PRD_V1.0.docx            # PRD Word 历史版本
 ├── docs/
-│   ├── 数媒智创平台_PRD_V2.4.md            # PRD Markdown 版本（最新）
+│   ├── 数媒智创平台_PRD_V2.5.md            # PRD Markdown 版本（最新）
+│   ├── 数媒智创平台_PRD_V2.4.md            # PRD Markdown 历史版本
 │   ├── 数媒智创平台_PRD_V2.3.md            # PRD Markdown 历史版本
 │   ├── 数媒智创平台_PRD_V2.2.md            # PRD Markdown 历史版本（国际源推断，V2.3已订正）
 │   ├── 数媒智创平台_PRD_V2.1.md            # PRD Markdown 历史版本
@@ -77,7 +79,7 @@
 
 ## 5. 使用建议
 
-1. 优先阅读 `docs/数媒智创平台_PRD_V2.4.md` 获取完整产品信息。
+1. 优先阅读 `docs/数媒智创平台_PRD_V2.5.md` 获取完整产品信息。
 2. 在 `roadmap/` 目录下新增规划文档，持续迭代。
 3. 每次重大修订后更新版本号并填写修订记录。
 
